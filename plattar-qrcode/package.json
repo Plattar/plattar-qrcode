@@ -1,0 +1,38 @@
+{
+  "name": "@plattar/plattar-qrcode",
+  "version": "1.106.5",
+  "description": "",
+  "main": "index.js",
+  "module": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "clean": "rm -rf build node_modules",
+    "build": "npm run clean && npm install && npm run build-es2019 && npm run build-es2015",
+    "build-es2019": "rm -rf build/es2019 && mkdir -p build/es2019 && browserify --standalone PlattarQRCode index.js -o build/es2019/plattar-qrcode.js && uglifyjs build/es2019/plattar-qrcode.js --output build/es2019/plattar-qrcode.min.js",
+    "build-es2015": "rm -rf build/es2015 && mkdir -p build/es2015 && babel build/es2019/plattar-qrcode.js --presets=@babel/env > build/es2015/plattar-qrcode.js && uglifyjs build/es2015/plattar-qrcode.js --output build/es2015/plattar-qrcode.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Plattar/plattar-qrcode.git"
+  },
+  "engines": {
+    "node": "^10.17 || >=12.3"
+  },
+  "keywords": [],
+  "author": "plattar",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Plattar/plattar-qrcode/issues"
+  },
+  "homepage": "https://www.plattar.com",
+  "dependencies": {
+    "qr-code-styling": "^1.3.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.13.14",
+    "@babel/core": "^7.13.14",
+    "@babel/preset-env": "^7.13.12",
+    "browserify": "^17.0.0",
+    "uglify-es": "^3.3.9"
+  }
+}
