@@ -1,6 +1,6 @@
 {
   "name": "@plattar/plattar-qrcode",
-  "version": "1.107.1",
+  "version": "1.107.2",
   "description": "Allows embedding Plattar-Style QR Codes for existing websites.",
   "main": "index.js",
   "module": "index.js",
