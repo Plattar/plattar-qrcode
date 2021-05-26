@@ -108,6 +108,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
             var width = this.hasAttribute("width") ? this.getAttribute("width") : 512;
             var height = this.hasAttribute("height") ? this.getAttribute("height") : 512;
+            var margin = this.hasAttribute("margin") ? this.getAttribute("margin") : 0;
             var image = this.hasAttribute("image") ? this.getAttribute("image") : undefined;
 
             if (image === "default") {
@@ -121,7 +122,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
               "width": width,
               "height": height,
               "data": url,
-              "margin": 20,
+              "margin": margin,
               "imageOptions": {
                 "hideBackgroundDots": true,
                 "imageSize": 0.4,

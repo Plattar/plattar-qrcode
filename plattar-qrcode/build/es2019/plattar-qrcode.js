@@ -15,6 +15,7 @@ class BaseElement extends HTMLElement {
 
         const width = this.hasAttribute("width") ? this.getAttribute("width") : 512;
         const height = this.hasAttribute("height") ? this.getAttribute("height") : 512;
+        const margin = this.hasAttribute("margin") ? this.getAttribute("margin") : 0;
 
         let image = this.hasAttribute("image") ? this.getAttribute("image") : undefined;
 
@@ -29,7 +30,7 @@ class BaseElement extends HTMLElement {
                 "width": width,
                 "height": height,
                 "data": url,
-                "margin": 20,
+                "margin": margin,
                 "imageOptions": {
                     "hideBackgroundDots": true,
                     "imageSize": 0.4,
