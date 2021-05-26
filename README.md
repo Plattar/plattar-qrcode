@@ -34,13 +34,19 @@ npm install @plattar/plattar-qrcode
 
 ### _Examples_
 
--   Embed a Plattar Styled QRCode into your website
+Embed a Plattar Styled QRCode into your website
 
 ```html
-<plattar-qrcode url="your-url" width="512" height="512"></plattar-qrcode>
+<plattar-qrcode url="https://www.plattar.com" width="256" height="256" margin="0" color="#101721"></plattar-qrcode>
 ```
 
-### Acknowledgements
+Will output the following QRCode
+
+<h3 align="left">
+  <img src="graphics/plattar-qrcode.png?raw=true" alt="Plattar-QRCode" width="256">
+</h3>
+
+### _Acknowledgements_
 
 This tool relies on the following open source projects.
 
