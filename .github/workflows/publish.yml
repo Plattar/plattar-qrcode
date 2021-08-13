@@ -1,0 +1,36 @@
+name: NPM Publish
+on: 
+  push:
+    tags:
+      - '*.*.*'
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: set version from tag
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: print version number
+        run: echo ${{ env.RELEASE_VERSION }}
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - name: configure git
+        run: |
+          git config user.email "info@plattar.com"
+          git config user.name "Plattar"
+      - name: set pre-release version
+        run: npm version --prefix plattar-qrcode ${{ env.RELEASE_VERSION }}
+      - name: write version.js
+        run: rm -rf plattar-qrcode/version.js && echo 'module.exports = "${{ env.RELEASE_VERSION }}";' > plattar-qrcode/version.js
+      - name: copy README
+        run: cp README.md plattar-qrcode/README.md
+      - name: copy graphics
+        run: cp -R graphics plattar-qrcode/
+      - name: NPM Build
+        run: npm run --prefix plattar-qrcode clean:build
+      - uses: JS-DevTools/npm-publish@v1
+        with:
+          package: ./plattar-qrcode/package.json
+          token: ${{ secrets.NPM_PUBLISH_KEY }}
+          access: 'public'

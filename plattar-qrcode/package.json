@@ -1,6 +1,6 @@
 {
   "name": "@plattar/plattar-qrcode",
-  "version": "1.107.3",
+  "version": "0.0.1",
   "description": "Allows embedding Plattar-Style QR Codes for existing websites.",
   "main": "index.js",
   "module": "index.js",
@@ -9,7 +9,8 @@
     "clean": "rm -rf build node_modules",
     "build": "npm run clean && npm install && npm run build-es2019 && npm run build-es2015",
     "build-es2019": "rm -rf build/es2019 && mkdir -p build/es2019 && browserify --standalone PlattarQRCode index.js -o build/es2019/plattar-qrcode.js && uglifyjs build/es2019/plattar-qrcode.js --output build/es2019/plattar-qrcode.min.js",
-    "build-es2015": "rm -rf build/es2015 && mkdir -p build/es2015 && babel build/es2019/plattar-qrcode.js --presets=@babel/env > build/es2015/plattar-qrcode.js && uglifyjs build/es2015/plattar-qrcode.js --output build/es2015/plattar-qrcode.min.js"
+    "build-es2015": "rm -rf build/es2015 && mkdir -p build/es2015 && babel build/es2019/plattar-qrcode.js --presets=@babel/env > build/es2015/plattar-qrcode.js && uglifyjs build/es2015/plattar-qrcode.js --output build/es2015/plattar-qrcode.min.js",
+    "clean:build": "npm run clean && npm run build"
   },
   "repository": {
     "type": "git",
