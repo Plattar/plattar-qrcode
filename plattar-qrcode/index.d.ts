@@ -1,1 +1,3 @@
-declare module "@plattar/plattar-qrcode" { }
+declare module "@plattar/plattar-qrcode" {
+    export var version: string;
+}

@@ -7,5 +7,5 @@ console.log("using @plattar/plattar-qrcode v" + Version);
 customElements.define("plattar-qrcode", QRCodeElement);
 
 module.exports = {
-    Version: Version
+    version: Version
 };
