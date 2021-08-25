@@ -29,8 +29,8 @@ class BaseElement extends HTMLElement {
             throw new Error("BaseElement.renderQRCode() - required attribute \"url\" is missing or invalid");
         }
 
-        const width = this.hasAttribute("width") ? this.getAttribute("width") : 512;
-        const height = this.hasAttribute("height") ? this.getAttribute("height") : 512;
+        const width = this.hasAttribute("width") ? parseInt(this.getAttribute("width")) : 512;
+        const height = this.hasAttribute("height") ? parseInt(this.getAttribute("height")) : 512;
         const margin = this.hasAttribute("margin") ? this.getAttribute("margin") : 0;
         const image = this.hasAttribute("image") ? this.getAttribute("image") : undefined;
         const color = this.hasAttribute("color") ? this.getAttribute("color") : "#000000";
@@ -107,8 +107,8 @@ class BaseElement extends HTMLElement {
             }
         };
 
-        this._options.width = width;
-        this._options.height = height;
+        this._options.width = width || 512;
+        this._options.height = height || 512;
         this._options.data = url;
         this._options.margin = margin;
         this._options.image = image;
