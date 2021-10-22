@@ -34,6 +34,7 @@ class BaseElement extends HTMLElement {
         const margin = this.hasAttribute("margin") ? this.getAttribute("margin") : 0;
         const image = this.hasAttribute("image") ? this.getAttribute("image") : undefined;
         const color = this.hasAttribute("color") ? this.getAttribute("color") : "#000000";
+        const style = this.hasAttribute("qr-type") ? this.getAttribute("qr-type") : "default";
 
         this._options = this._options || {
             imageOptions: {
@@ -117,6 +118,15 @@ class BaseElement extends HTMLElement {
         this._options.dotsOptions.color = color;
         this._options.cornersDotOptions.color = color;
         this._options.cornersSquareOptions.color = color;
+
+        switch (style) {
+            case "dots":
+                this._options.dotsOptions.type = "dots";
+                break;
+            case "default":
+            default:
+                this._options.dotsOptions.type = "rounded";
+        }
 
         const shadow = this.shadowRoot || this.attachShadow({ mode: 'open' });
 
