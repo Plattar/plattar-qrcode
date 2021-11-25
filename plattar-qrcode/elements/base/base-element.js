@@ -108,8 +108,8 @@ class BaseElement extends HTMLElement {
             }
         };
 
-        this._options.width = width || 512;
-        this._options.height = height || 512;
+        this._options.width = 2048;
+        this._options.height = 2048;
         this._options.data = url;
         this._options.margin = margin;
         this._options.image = image;
@@ -133,9 +133,21 @@ class BaseElement extends HTMLElement {
         const qrCode = this._qrCode;
 
         if (!qrCode) {
-            this._qrCode = new QRCodeStyling(this._options);
+            const div = document.createElement("div");
+            div.style.width = width + "px";
+            div.style.height = height + "px";
 
-            this._qrCode.append(shadow);
+            shadow.appendChild(div);
+
+            this._qrCode = new QRCodeStyling(this._options);
+            this._qrCode.append(div);
+
+            const canvas = this._qrCode._canvas;
+
+            if (canvas) {
+                canvas.style.width = "100%";
+                canvas.style.height = "100%";
+            }
 
             return;
         }
