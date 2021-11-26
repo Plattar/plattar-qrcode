@@ -9,6 +9,18 @@ class BaseElement extends HTMLElement {
         if (this.hasAttribute("url")) {
             this.renderQRCode();
         }
+
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === "attributes") {
+                    this.renderQRCode();
+                }
+            });
+        });
+
+        observer.observe(this, {
+            attributes: true
+        });
     }
 
     download(options) {
@@ -134,25 +146,40 @@ class BaseElement extends HTMLElement {
 
         if (!qrCode) {
             const div = document.createElement("div");
-            div.style.width = width + "px";
-            div.style.height = height + "px";
-
             shadow.appendChild(div);
 
+            this._divContainer = div;
             this._qrCode = new QRCodeStyling(this._options);
             this._qrCode.append(div);
 
-            const canvas = this._qrCode._canvas;
-
-            if (canvas) {
-                canvas.style.width = "100%";
-                canvas.style.height = "100%";
-            }
+            this._UpdateCanvas(width, height);
 
             return;
         }
 
         this._qrCode.update(this._options);
+
+        this._UpdateCanvas(width, height);
+    }
+
+    _UpdateCanvas(width, height) {
+        if (!this._qrCode) {
+            return;
+        }
+
+        const canvas = this._qrCode._canvas;
+
+        if (canvas) {
+            canvas.style.width = "100%";
+            canvas.style.height = "100%";
+        }
+
+        if (this._divContainer) {
+            const div = this._divContainer;
+
+            div.style.width = width + "px";
+            div.style.height = height + "px";
+        }
     }
 }
 
