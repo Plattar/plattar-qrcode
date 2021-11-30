@@ -119,11 +119,12 @@ class BaseElement extends HTMLElement {
                     color2: "#ffffff",
                     rotation: "0"
                 }
-            }
+            },
+            width: 1024,
+            height: 1024,
+            type: "canvas"
         };
 
-        this._options.width = 2048;
-        this._options.height = 2048;
         this._options.data = url;
         this._options.margin = margin;
         this._options.image = image;
