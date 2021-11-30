@@ -13,7 +13,9 @@ class BaseElement extends HTMLElement {
         const observer = new MutationObserver((mutations) => {
             mutations.forEach((mutation) => {
                 if (mutation.type === "attributes") {
-                    this.renderQRCode();
+                    if (this.hasAttribute("url")) {
+                        this.renderQRCode();
+                    }
                 }
             });
         });
