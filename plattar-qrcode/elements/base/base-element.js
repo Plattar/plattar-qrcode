@@ -40,7 +40,8 @@ class BaseElement extends HTMLElement {
         const url = this.hasAttribute("url") ? this.getAttribute("url") : undefined;
 
         if (!url) {
-            throw new Error("BaseElement.renderQRCode() - required attribute \"url\" is missing or invalid");
+            console.warn("PlattarQR.renderQRCode() - required attribute \"url\" is missing or invalid, QR Code will not render");
+            return;
         }
 
         const width = this.hasAttribute("width") ? parseInt(this.getAttribute("width")) : 512;
