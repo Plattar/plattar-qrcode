@@ -6,7 +6,7 @@
   "module": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "clean": "rm -rf build node_modules",
+    "clean": "rm -rf build node_modules package-lock.json",
     "build": "npm run clean && npm install && npm run build-es2019 && npm run build-es2015",
     "build-es2019": "rm -rf build/es2019 && mkdir -p build/es2019 && browserify --standalone PlattarQRCode index.js -o build/es2019/plattar-qrcode.js && uglifyjs build/es2019/plattar-qrcode.js --output build/es2019/plattar-qrcode.min.js",
     "build-es2015": "rm -rf build/es2015 && mkdir -p build/es2015 && babel build/es2019/plattar-qrcode.js --presets=@babel/env > build/es2015/plattar-qrcode.js && uglifyjs build/es2015/plattar-qrcode.js --output build/es2015/plattar-qrcode.min.js",
@@ -42,9 +42,9 @@
     "qr-code-styling": "^1.6.0-rc.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.16.0",
-    "@babel/core": "^7.16.0",
-    "@babel/preset-env": "^7.16.4",
+    "@babel/cli": "^7.17.0",
+    "@babel/core": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
     "browserify": "^17.0.0",
     "uglify-es": "^3.3.9"
   },
