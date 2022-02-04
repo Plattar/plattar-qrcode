@@ -126,7 +126,6 @@ class BaseElement extends HTMLElement {
             type: "canvas"
         };
 
-        this._options.data = url;
         this._options.margin = margin;
         this._options.image = image;
 
@@ -143,6 +142,45 @@ class BaseElement extends HTMLElement {
             default:
                 this._options.dotsOptions.type = "rounded";
         }
+
+        const shortenURL = this.hasAttribute("shorten") ? this.getAttribute("shorten") : "false";
+
+        if (shortenURL && shortenURL.toLowerCase() === "true") {
+            this._ShortenURL(url).then((newURL) => {
+                this._GenerateQRCode(newURL, width, height);
+            }).catch((_err) => {
+                console.warn(_err);
+                // ignore error and just generate normal QR Code
+                this._GenerateQRCode(url, width, height);
+            });
+        }
+        else {
+            this._GenerateQRCode(url, width, height);
+        }
+    }
+
+    _UpdateCanvas(width, height) {
+        if (!this._qrCode) {
+            return;
+        }
+
+        const canvas = this._qrCode._canvas;
+
+        if (canvas) {
+            canvas.style.width = "100%";
+            canvas.style.height = "100%";
+        }
+
+        if (this._divContainer) {
+            const div = this._divContainer;
+
+            div.style.width = width + "px";
+            div.style.height = height + "px";
+        }
+    }
+
+    _GenerateQRCode(url, width, height) {
+        this._options.data = url;
 
         const shadow = this.shadowRoot || this.attachShadow({ mode: 'open' });
 
@@ -166,24 +204,36 @@ class BaseElement extends HTMLElement {
         this._UpdateCanvas(width, height);
     }
 
-    _UpdateCanvas(width, height) {
-        if (!this._qrCode) {
-            return;
-        }
+    _IsFetchAPISupported() {
+        return 'fetch' in window;
+    }
 
-        const canvas = this._qrCode._canvas;
+    _ShortenURL(url) {
+        return new Promise((accept, reject) => {
+            if (!this._IsFetchAPISupported()) {
+                return reject(new Error("PlattarQR._ShortenURL() - fetch api not supported, cannot proceed"));
+            }
 
-        if (canvas) {
-            canvas.style.width = "100%";
-            canvas.style.height = "100%";
-        }
+            try {
+                const b64 = btoa(url);
+                const endpoint = "https://c.plattar.space/api/v2/shorten?base64=" + b64;
 
-        if (this._divContainer) {
-            const div = this._divContainer;
+                fetch(endpoint).then((response) => {
+                    if (!response.ok) {
+                        throw new Error("PlattarQR._ShortenURL() - response was invalid");
+                    }
 
-            div.style.width = width + "px";
-            div.style.height = height + "px";
-        }
+                    return response.text();
+                }).then((text) => {
+                    return accept(text);
+                }).catch(() => {
+                    return reject(new Error("PlattarQR._ShortenURL() - there was an unexpected issue generating short url"));
+                });
+            }
+            catch (err) {
+                return reject(err);
+            }
+        });
     }
 }
 
