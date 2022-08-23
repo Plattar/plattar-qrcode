@@ -44,8 +44,8 @@ class BaseElement extends HTMLElement {
             return;
         }
 
-        const width = this.hasAttribute("width") ? parseInt(this.getAttribute("width")) : 512;
-        const height = this.hasAttribute("height") ? parseInt(this.getAttribute("height")) : 512;
+        const width = this.hasAttribute("width") ? this.getAttribute("width") : "100%";
+        const height = this.hasAttribute("height") ? this.getAttribute("height") : "100%";
         const margin = this.hasAttribute("margin") ? this.getAttribute("margin") : 0;
         const image = this.hasAttribute("image") ? this.getAttribute("image") : undefined;
         const color = this.hasAttribute("color") ? this.getAttribute("color") : "#000000";
@@ -174,8 +174,8 @@ class BaseElement extends HTMLElement {
         if (this._divContainer) {
             const div = this._divContainer;
 
-            div.style.width = width + "px";
-            div.style.height = height + "px";
+            div.style.width = width;
+            div.style.height = height;
         }
     }
 

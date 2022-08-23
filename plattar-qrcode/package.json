@@ -42,9 +42,9 @@
     "qr-code-styling": "^1.6.0-rc.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.17.0",
-    "@babel/core": "^7.17.0",
-    "@babel/preset-env": "^7.16.11",
+    "@babel/cli": "^7.18.10",
+    "@babel/core": "^7.18.13",
+    "@babel/preset-env": "^7.18.10",
     "browserify": "^17.0.0",
     "uglify-es": "^3.3.9"
   },
