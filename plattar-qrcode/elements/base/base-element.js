@@ -216,7 +216,7 @@ class BaseElement extends HTMLElement {
 
             try {
                 const b64 = btoa(url);
-                const endpoint = "https://c.plattar.space/api/v2/shorten?base64=" + b64;
+                const endpoint = "https://c2.plattar.space/api/v2/shorten?base64=" + b64;
 
                 fetch(endpoint).then((response) => {
                     if (!response.ok) {
