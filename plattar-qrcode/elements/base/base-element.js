@@ -1,4 +1,5 @@
 const QRCodeStyling = require("qr-code-styling");
+const hash = require("object-hash");
 
 class BaseElement extends HTMLElement {
     constructor() {
@@ -51,6 +52,9 @@ class BaseElement extends HTMLElement {
         const color = this.hasAttribute("color") ? this.getAttribute("color") : "#000000";
         const style = this.hasAttribute("qr-type") ? this.getAttribute("qr-type") : "default";
 
+        // used to check if anything has changed in the options
+        // to avoid re-rendering
+        this._optionsHash = '0';
         this._options = this._options || {
             imageOptions: {
                 hideBackgroundDots: true,
@@ -167,15 +171,25 @@ class BaseElement extends HTMLElement {
         const canvas = this._qrCode._canvas;
 
         if (canvas) {
-            canvas.style.width = "100%";
-            canvas.style.height = "100%";
+            if (canvas.style.width !== "100%") {
+                canvas.style.width = "100%";
+            }
+
+            if (canvas.style.height !== "100%") {
+                canvas.style.height = "100%";
+            }
         }
 
         if (this._divContainer) {
             const div = this._divContainer;
 
-            div.style.width = width;
-            div.style.height = height;
+            if (div.style.width !== width) {
+                div.style.width = width;
+            }
+
+            if (div.style.height !== height) {
+                div.style.height = height;
+            }
         }
     }
 
@@ -188,6 +202,7 @@ class BaseElement extends HTMLElement {
 
         if (!qrCode) {
             const div = document.createElement("div");
+            div.style.display = "none";
             shadow.appendChild(div);
 
             this._divContainer = div;
@@ -196,12 +211,24 @@ class BaseElement extends HTMLElement {
 
             this._UpdateCanvas(width, height);
 
+            div.style.display = "block";
+
             return;
         }
 
-        this._qrCode.update(this._options);
+        const newHash = hash({
+            options: this._options,
+            width: width,
+            height: height
+        });
 
-        this._UpdateCanvas(width, height);
+        if (this._optionsHash !== newHash) {
+            this._optionsHash = newHash;
+
+            this._qrCode.update(this._options);
+
+            this._UpdateCanvas(width, height);
+        }
     }
 
     _IsFetchAPISupported() {
