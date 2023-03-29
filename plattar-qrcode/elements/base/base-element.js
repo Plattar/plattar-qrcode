@@ -167,15 +167,25 @@ class BaseElement extends HTMLElement {
         const canvas = this._qrCode._canvas;
 
         if (canvas) {
-            canvas.style.width = "100%";
-            canvas.style.height = "100%";
+            if (canvas.style.width !== "100%") {
+                canvas.style.width = "100%";
+            }
+
+            if (canvas.style.height !== "100%") {
+                canvas.style.height = "100%";
+            }
         }
 
         if (this._divContainer) {
             const div = this._divContainer;
 
-            div.style.width = width;
-            div.style.height = height;
+            if (div.style.width !== width) {
+                div.style.width = width;
+            }
+
+            if (div.style.height !== height) {
+                div.style.height = height;
+            }
         }
     }
 
@@ -188,6 +198,7 @@ class BaseElement extends HTMLElement {
 
         if (!qrCode) {
             const div = document.createElement("div");
+            div.style.display = "none";
             shadow.appendChild(div);
 
             this._divContainer = div;
@@ -195,6 +206,8 @@ class BaseElement extends HTMLElement {
             this._qrCode.append(div);
 
             this._UpdateCanvas(width, height);
+
+            div.style.display = "block";
 
             return;
         }
