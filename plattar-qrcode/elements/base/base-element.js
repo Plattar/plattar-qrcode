@@ -242,7 +242,7 @@ class BaseElement extends HTMLElement {
             }
 
             try {
-                const b64Link = Buffer.from(url, "base64").toString();
+                const b64Link = new Buffer(url).toString("base64");
 
                 fetch("https://c.plattar.com/shorten", {
                     cache: "no-store",
