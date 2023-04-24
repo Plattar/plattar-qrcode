@@ -232,7 +232,7 @@ class BaseElement extends HTMLElement {
     }
 
     _IsFetchAPISupported() {
-        return 'fetch' in window;
+        return "fetch" in window;
     }
 
     _ShortenURL(url) {
@@ -242,17 +242,30 @@ class BaseElement extends HTMLElement {
             }
 
             try {
-                const b64 = btoa(url);
-                const endpoint = "https://c2.plattar.space/api/v2/shorten?base64=" + b64;
+                const b64Link = Buffer.from(url, "base64").toString();
 
-                fetch(endpoint).then((response) => {
+                fetch("https://c.plattar.com/shorten", {
+                    cache: "no-store",
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        data: {
+                            attributes: {
+                                url: b64Link,
+                                isBase64: true
+                            }
+                        }
+                    })
+                }).then((response) => {
                     if (!response.ok) {
                         throw new Error("PlattarQR._ShortenURL() - response was invalid");
                     }
 
-                    return response.text();
-                }).then((text) => {
-                    return accept(text);
+                    return response.json();
+                }).then((json) => {
+                    return accept(json.data.attributes.url);
                 }).catch(() => {
                     return reject(new Error("PlattarQR._ShortenURL() - there was an unexpected issue generating short url"));
                 });
