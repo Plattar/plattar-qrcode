@@ -211,7 +211,7 @@ class BaseElement extends HTMLElement {
 
             this._UpdateCanvas(width, height);
 
-            div.style.display = "block";
+            div.style.display = "flex";
 
             return;
         }
