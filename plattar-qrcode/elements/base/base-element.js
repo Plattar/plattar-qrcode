@@ -151,11 +151,21 @@ class BaseElement extends HTMLElement {
 
         if (shortenURL && shortenURL.toLowerCase() === "true") {
             this._ShortenURL(url).then((newURL) => {
-                this._GenerateQRCode(newURL, width, height);
+                // make sure by time promise is resolved that the original url hasn't been updated
+                const updatedURL = this.hasAttribute("url") ? this.getAttribute("url") : undefined;
+
+                if (updatedURL === url) {
+                    this._GenerateQRCode(newURL, width, height);
+                }
             }).catch((_err) => {
                 console.warn(_err);
                 // ignore error and just generate normal QR Code
-                this._GenerateQRCode(url, width, height);
+                // make sure by time promise is resolved that the original url hasn't been updated
+                const updatedURL = this.hasAttribute("url") ? this.getAttribute("url") : undefined;
+
+                if (updatedURL === url) {
+                    this._GenerateQRCode(url, width, height);
+                }
             });
         }
         else {
