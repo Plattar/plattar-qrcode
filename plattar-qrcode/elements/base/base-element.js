@@ -178,7 +178,7 @@ class BaseElement extends HTMLElement {
             return;
         }
 
-        const canvas = this._qrCode._canvas;
+        const canvas = this._qrCode._domCanvas || this._qrCode._canvas;
 
         if (canvas) {
             if (canvas.style.width !== "100%") {
