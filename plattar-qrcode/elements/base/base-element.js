@@ -254,7 +254,9 @@ class BaseElement extends HTMLElement {
             try {
                 const b64Link = btoa(url);
 
-                fetch("https://c.plattar.com/shorten", {
+                const serverType = this.hasAttribute("server") ? this.getAttribute("server") : "production";
+
+                fetch(serverType === "staging" ? "https://c.plattar.space/shorten" : "https://c.plattar.com/shorten", {
                     cache: "no-store",
                     method: "POST",
                     headers: {

@@ -39,14 +39,14 @@
   },
   "homepage": "https://www.plattar.com",
   "dependencies": {
-    "qr-code-styling": "^1.6.0-rc.1",
+    "qr-code-styling": "^1.9.2",
     "object-hash": "^3.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.23.4",
-    "@babel/core": "^7.23.7",
-    "@babel/preset-env": "^7.23.8",
-    "browserify": "^17.0.0",
+    "@babel/cli": "^7.28.6",
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.5",
+    "browserify": "^17.0.1",
     "uglify-es": "^3.3.9"
   },
   "publishConfig": {

@@ -6,15 +6,18 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6
       - name: set version from tag
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: print version number
         run: echo ${{ env.RELEASE_VERSION }}
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 24
       - name: configure git
         run: |
           git config user.email "info@plattar.com"
@@ -29,8 +32,8 @@ jobs:
         run: cp -R graphics plattar-qrcode/
       - name: NPM Build
         run: npm run --prefix plattar-qrcode clean:build
-      - uses: JS-DevTools/npm-publish@v1
+      - uses: JS-DevTools/npm-publish@v4
         with:
           package: ./plattar-qrcode/package.json
-          token: ${{ secrets.NPM_PUBLISH_KEY }}
+          token: ${{ secrets.NPM_READONLY_KEY }}
           access: 'public'
